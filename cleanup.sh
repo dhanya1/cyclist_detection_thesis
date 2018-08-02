@@ -1,0 +1,8 @@
+rm example_under_construction.aux 
+rm example_under_construction.bcf
+rm example_under_construction.lof
+rm example_under_construction.log
+rm example_under_construction.lot
+rm example_under_construction.Rout 
+rm example_under_construction.tex
+rm example_under_construction.toc

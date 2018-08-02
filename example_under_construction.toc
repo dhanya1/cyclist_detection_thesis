@@ -1,0 +1,23 @@
+\boolfalse {citerequest}\boolfalse {citetracker}\boolfalse {pagetracker}\boolfalse {backtracker}\relax 
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {1}Abstract}{3}
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {2}Literature Review}{3}
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {2.1}Detection}{3}
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {2.2}Convolutional neural networks}{4}
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {3}State of Art}{4}
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {3.1}Parameter optimization}{4}
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {3.2}Region proposal network}{5}
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {3.3}Regularization}{5}
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {3.4}L2 regularization}{5}
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {4}Accuracy}{5}
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {5}Future work}{6}

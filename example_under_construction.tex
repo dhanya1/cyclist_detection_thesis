@@ -1,0 +1,204 @@
+% Created 2018-02-29 
+% Modified 2018-04-15
+\documentclass[11pt]{article}\usepackage[]{graphicx}\usepackage[]{color}
+%% maxwidth is the original width if it is less than linewidth
+%% otherwise use linewidth (to make sure the graphics do not exceed the margin)
+\makeatletter
+\def\maxwidth{ %
+  \ifdim\Gin@nat@width>\linewidth
+    \linewidth
+  \else
+    \Gin@nat@width
+  \fi
+}
+\makeatother
+
+\definecolor{fgcolor}{rgb}{0.345, 0.345, 0.345}
+\newcommand{\hlnum}[1]{\textcolor[rgb]{0.686,0.059,0.569}{#1}}%
+\newcommand{\hlstr}[1]{\textcolor[rgb]{0.192,0.494,0.8}{#1}}%
+\newcommand{\hlcom}[1]{\textcolor[rgb]{0.678,0.584,0.686}{\textit{#1}}}%
+\newcommand{\hlopt}[1]{\textcolor[rgb]{0,0,0}{#1}}%
+\newcommand{\hlstd}[1]{\textcolor[rgb]{0.345,0.345,0.345}{#1}}%
+\newcommand{\hlkwa}[1]{\textcolor[rgb]{0.161,0.373,0.58}{\textbf{#1}}}%
+\newcommand{\hlkwb}[1]{\textcolor[rgb]{0.69,0.353,0.396}{#1}}%
+\newcommand{\hlkwc}[1]{\textcolor[rgb]{0.333,0.667,0.333}{#1}}%
+\newcommand{\hlkwd}[1]{\textcolor[rgb]{0.737,0.353,0.396}{\textbf{#1}}}%
+\let\hlipl\hlkwb
+
+\usepackage{framed}
+\makeatletter
+\newenvironment{kframe}{%
+ \def\at@end@of@kframe{}%
+ \ifinner\ifhmode%
+  \def\at@end@of@kframe{\end{minipage}}%
+  \begin{minipage}{\columnwidth}%
+ \fi\fi%
+ \def\FrameCommand##1{\hskip\@totalleftmargin \hskip-\fboxsep
+ \colorbox{shadecolor}{##1}\hskip-\fboxsep
+     % There is no \\@totalrightmargin, so:
+     \hskip-\linewidth \hskip-\@totalleftmargin \hskip\columnwidth}%
+ \MakeFramed {\advance\hsize-\width
+   \@totalleftmargin\z@ \linewidth\hsize
+   \@setminipage}}%
+ {\par\unskip\endMakeFramed%
+ \at@end@of@kframe}
+\makeatother
+
+\definecolor{shadecolor}{rgb}{.97, .97, .97}
+\definecolor{messagecolor}{rgb}{0, 0, 0}
+\definecolor{warningcolor}{rgb}{1, 0, 1}
+\definecolor{errorcolor}{rgb}{1, 0, 0}
+\newenvironment{knitrout}{}{} % an empty environment to be redefined in TeX
+
+\usepackage{alltt}
+\usepackage[a4paper,portrait,textwidth=18cm]{geometry}
+
+\usepackage[titletoc]{appendix}
+\setcounter{secnumdepth}{2}
+
+%% INCLUDE FOLLOWING BLOCK FOR BIBLIOGRAPHY
+\usepackage[
+backend=biber,
+style=alphabetic,
+citestyle=authoryear]{biblatex}
+\renewcommand*{\bibopenparen}{[}
+\renewcommand*{\bibcloseparen}{]}
+\renewcommand*{\finalandcomma}{,}
+\renewcommand*{\finalnamedelim}{, and~}
+\renewcommand*\bibnamedash{\rule[0.48ex]{3em}{0.14ex}\space}
+\addbibresource{example_under_construction.bib} 
+\RequirePackage{listings}
+\lstset{language=Python}
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\begin{document}
+
+
+\begin{titlepage}
+\centering
+{\scshape\LARGE University College Cork\par}
+\vspace{1cm}
+{\scshape\Large Master's Thesis \par}
+\vspace{1.5cm}
+{\huge\bfseries Cyclist Detection\par}  
+\vspace{0.5cm}
+{\Large\itshape Dhanya Sringeri Jayachandra \par}
+\vfill
+supervised by\par
+Dr. Gregory Provan
+\vfill
+{\large \today\par}
+\end{titlepage}
+
+\setcounter{tocdepth}{2}
+\tableofcontents
+\clearpage
+\listoftables
+\listoffigures
+\clearpage
+
+\section{Abstract}
+Road-Safety is a primary concern in all Autonomous and Advanced Driver Assistance systems. The smart cars are facing many challenges in Vulnerable road users recognition [ VRUs]. We have seen examples of Computer Vision failing to recognize cyclists, and failure in recognizing pedestrians in dim light. It’s important to classify between pedestrians and cyclists as traffic rules are different for these two. Though most autonomous cars are able to classify pedestrians, it would largely help us deal with the cyclists differently.\\
+
+Vulnerable road users can be detected using 2 methods.\\
+(1) Sensor based approach\\
+(2)Vision based approach\\
+
+In sensor based approach, the autonomous vehicles are mounted with sensors such as LiDAR systems. The depth information of the sensor based systems result in higher accuracy and 
+these are considered superior and known to have high accuaracy in today's research field. However, these methods will not be portable as they are dependent on the hardware of the car. Sensors are also expensive and some car manufacturers are reluctant to compramise the look of the car for smart features.\\
+
+In this paper, we will discuss and try to identify cyclists as accurately and quickly as possible using vision based approach. Accuracy and Speed are both very important aspects that could highly influence the outcome in road-safety systems. In this papers, we will compare the performance of different Convolutional neural network architectures, their performance on the vision-based networks. We can compare the performance of one model over the other. Improving accuray of object detection with each new network tried is the goal.\\
+
+\section{Literature Review}
+
+\subsection{Detection}
+Pedestrian detection has taken off really well since the introduction of deep learning neural networks. Architectures like Convolutional neural networks have done exceptionally well. Early methods like VJ detector by Viola-Jones [tobecitedcite{xiaofei\_li\_new\_2016}], Histogram of Oriented Gradients by Dalal and Triggs
+in 2005 [12], Based on HOG detector, Deformable Part Model (DPM)
+was designed to weaken the deformation effect of non-rigid
+objects by Felzenswalb et al. in 2008 [13]. Another variant
+method ChnFtrs was applied to deploy multiple registered
+images channels for classification by Dollar et al. in 2009 [14].
+In 2013, ConvNet model was introduced to yield compet-
+itive results on major pedestrian detection benchmarks by
+Sermanet et al. [15].\\
+\\
+In paper, \\
+\\
+\subsection{Convolutional neural networks}
+
+Convolutional neural networks were introduced in 2014, ever since then they have bet all the previous methods in terms of
+object detection. In 2014, R-CNN [Regional Convolutional neural network] won the imagenet challenge by a significant margin
+compared to previous methods. It used a region proposal method on the image, then each proposed region was fed to seperate
+CNN and finally the object was detected. \\
+
+Fast-RCNN introduced using the regional proposal method on the feature map that was extractred by the CNN, hence saving a lot of
+computation time. Faster-RCNN as we have used in this model, uses it's own region proposal method based on the values computed by
+during the feature map generator instead of using an external regional proposal algorithm. This makes the system 100 times faster than
+RCNN.\\
+
+Faster RCNN consists of 2 parts:\\
+(1)Feature Extractor\\
+(2)Region Proposal network\\
+
+\textbf{Feature Extractor}:
+
+The feature extractor localises the parts of the image based on features. Some of the popular feature extractors
+are VGGnet, Resnet and Inception. So far, Resnet is known to have the highest accuracy. It is a very deep model with 101 hidden layers. Due to gradient explosion problem, it was impossible to have such deep layers up until the invention of Resnet. Resnet won the imagenet object detection challenge in 2015, beating other competitors in the field by significant margin. We will be using Resnet as our feature extractor in our model.\\
+
+\textbf{Region Proposal network}:
+
+
+
+Another CNN model that is considered in this setting is,\\
+\textbf{Faster Region based convolutional neural networks}:\\
+
+
+
+
+
+\section{State of Art}
+I have divided the dataset of cyclists in 3 different views. Narrow, Intermediate and wide
+based on the aspect ratio of the bounding box of cyclists. It's important to train the network
+on the different views of cyclists seperately as the cyclists look completely different from
+different views.\\
+
+\subsection{Parameter optimization}:
+
+Stride size:  Reduced the stride size from 16 to 8, even though the computation time is longer,
+more information needs to processed. \\
+
+\subsection{Region proposal network}:
+
+Region proposal networks generate proposals from the image fed to the network which might contain the object. So, RPN is responsible for the network to decide if an object is in foreground or background.
+In the first stage anchor generator, I am reducing the stride, so that more regions are proposed and none of the small cyclists are missed out.\\
+
+I have 4 anchors of scales 0.25, 0.5, 0.75 and 1.0. Each anchor will have 3 boxes with aspect ratio of 1:1(Intermidiate), 1:2(Narrow view), 2:1(Wide view). \\
+
+The maximum number of box proposals from the first stage was changed to 300.
+Used drop-out to avoid overfitting of the neurons and improve accuracy. Drop out increases the number of possible iterations required to converge. Hence, we increase the number of iterations.\\
+
+\subsection{Regularization}:
+ Regularization modifies the objective function that we minimize by adding additional terms that penalize large weights. In other words, we change the objective function so that it becomes Error+λf(θ), where f(θ) grows larger as the components of θ grow larger and λ is the regularization strength (a hyper-parameter for the learning algorithm).\\
+ 
+\subsection{L2 regularization}:
+It can be implemented by augmenting the error function with the squared magnitude of all weights in the neural network. In other words, for every weight w in the neural network, we add 1/2 λw**2 to the error function. The L2 regularization has the intuitive interpretation of heavily penalizing "peaky" weight vectors and preferring diffuse weight vectors. This has the appealing property of encouraging the network to use all of its inputs a little rather than using only some of its inputs a lot. Of particular note is that during the gradient descent update, using the L2 regularization ultimately means that every weight is decayed linearly to zero. Because of this phenomenon, L2 regularization is also commonly referred to as weight decay.\\
+
+We have intro\\
+
+\section{Accuracy}:
+\begin{center}
+\begin{tabular}{ c c c }
+Model & Modifications & Narrow & Intermediate & Wide \\
+FasterRCNN + Resnet & No finetuning & 53.2  & 22 \\
+FasterRCNN + Resnet & Increased region proposals & 55 & 33 \\
+FasterRCNN + Resnet & dropout & - & - \\
+\end{tabular}
+\end{center}
+
+\printbibliography
+
+\section{Future work}:
+
+We could calculate the distance between car and cyclists to determine if any action must be taken. We could also conduct the same experiments mentioned above in dim light and night time environments to understand how well the models would perform under challenging circumstances.\\
+
+\end{document}
+
