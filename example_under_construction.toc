@@ -2,22 +2,30 @@
 \defcounter {refsection}{0}\relax 
 \contentsline {section}{\numberline {1}Abstract}{3}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {2}Literature Review}{3}
+\contentsline {section}{\numberline {2}Introduction}{3}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {2.1}Detection}{3}
+\contentsline {section}{\numberline {3}Literature Review}{3}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {2.2}Convolutional neural networks}{4}
+\contentsline {subsection}{\numberline {3.1}Detection}{3}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {3}State of Art}{4}
+\contentsline {subsection}{\numberline {3.2}Convolutional neural networks}{3}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {3.1}Parameter optimization}{4}
+\contentsline {subsubsection}{Feature Extractor}{4}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {3.2}Region proposal network}{5}
+\contentsline {subsection}{\numberline {3.3}Region Proposal network}{4}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {3.3}Regularization}{5}
+\contentsline {section}{\numberline {4}Datasets}{4}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {3.4}L2 regularization}{5}
+\contentsline {section}{\numberline {5}State of Art}{4}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {4}Accuracy}{5}
+\contentsline {subsection}{\numberline {5.1}Parameter optimization}{4}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {5}Future work}{6}
+\contentsline {subsection}{\numberline {5.2}Region Proposal network}{5}
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {5.3}Regularization:}{5}
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {5.4}L2 Regularization}{5}
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {6}Accuracy}{5}
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {7}Future work:}{6}

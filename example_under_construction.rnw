@@ -113,7 +113,7 @@ Faster Region based convolutional neural networks:\\
 
 The dataset that is considered in this experiment is available for public as tsinga-dailmer dataset/
 
-\section{State of Art}:
+\section{Experiment}:
 I have divided the dataset of cyclists in 3 different views. Narrow, Intermediate and wide based on the
 aspect ratio of the bounding box of cyclists. It’s important to train the network on the different views of
 cyclists seperately as the cyclists look completely different from different views.
@@ -148,7 +148,35 @@ to use all of its inputs a little rather than using only some of its inputs a lo
 ing the gradient descent update, using the L2 regularization ultimately means that every weight is decayed
 linearly to zero. Because of this phenomenon, L2 regularization is also commonly referred to as weight decay.\\
 
+\subsection{Hard negative mining}
+
+\subsection{Hyper-parameter tuning}
+
+\subsubsection{R-FCN network:}
+RFCN pretrained on Coco image dataset is used. This is a much bigger imageset with 1.5 million images. Using this model
+the training period reduced drastically.
+This network is used with blah blah
 \section{Accuracy}
+
+\begin{center}
+ \begin{tabular}{||c c c c||} 
+ \hline
+ Model & Modifications & Narrow & Intermediate & Wide \\ [0.5ex] 
+ \hline
+FasterRCNN +Resnet & No finetuning & 53.2 & 22 & 787 \\ 
+ \hline
+FasterRCNN +Resnet & Increased region proposals & 55 & 33 & 5415 \\
+ \hline
+FasterRCNN + Resnet & dropout & 59 & 32 & -\\
+ \hline
+ R-FCN + Resnet & No finetuning & 50 & 33 & -\\
+ \hline
+
+ \hline
+\end{tabular}
+\end{center}
+
+
 
 
 \section{Future work:}

@@ -1,9 +1,9 @@
 [0] Config.pm:340> INFO - This is Biber 2.4
 [0] Config.pm:343> INFO - Logfile is 'example_under_construction.blg'
-[51] biber:287> INFO - === Wed Aug  1, 2018, 18:54:52
-[145] Biber.pm:348> INFO - Reading 'example_under_construction.bcf'
-[271] Biber.pm:742> INFO - Found 0 citekeys in bib section 0
-[272] Utils.pm:147> WARN - The file 'example_under_construction.bcf' does not contain any citations!
-[387] bbl.pm:519> INFO - Writing 'example_under_construction.bbl' with encoding 'ascii'
-[389] bbl.pm:615> INFO - Output to example_under_construction.bbl
-[468] Biber.pm:109> INFO - WARNINGS: 1
+[32] biber:287> INFO - === Thu Aug  2, 2018, 16:43:40
+[106] Biber.pm:348> INFO - Reading 'example_under_construction.bcf'
+[221] Biber.pm:742> INFO - Found 0 citekeys in bib section 0
+[222] Utils.pm:147> WARN - The file 'example_under_construction.bcf' does not contain any citations!
+[227] bbl.pm:519> INFO - Writing 'example_under_construction.bbl' with encoding 'ascii'
+[229] bbl.pm:615> INFO - Output to example_under_construction.bbl
+[229] Biber.pm:109> INFO - WARNINGS: 1

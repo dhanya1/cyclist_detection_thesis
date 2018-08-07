@@ -47,4 +47,4 @@ output file: example_under_construction.tex
 > quit( save = "no", status = 0, runLast = TRUE )
 > proc.time()
    user  system elapsed 
-  0.251   0.037   0.382 
+  0.247   0.011   0.261 
