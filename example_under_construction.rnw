@@ -51,22 +51,47 @@ Dr. Gregory Provan
 \section{Abstract}
 
 In this paper, we will discuss and try to classify pedestrians from cyclists as accurately and quickly as possible. Accuracy and Speed are both very important aspects that could highly influence the outcome in road-safety systems. Various types of Convolutional Neural Networks approches will be applied and we can compare the advantages of one model over the other. Improving accuray of object detection and tracking are our main goal.
+\clearpage
 
 \section{Introduction}
 
-Road-Safety is a primary concern in all Autonomous and Advanced Driver Assistance systems. The smart
-cars are facing many challenges in Vulnerable road users recognition [ VRUs]. We have seen examples of
-Computer Vision failing to recognize cyclists, and failure in recognizing pedestrians in dim light. Its impor-
-tant to classify between pedestrians and cyclists as traffic rules are different for these two. Though most
+Road-Safety is a crucial requirement in all Autonomous and Advanced Driver Assistance systems. The smart
+cars are facing many challenges in Vulnerable road users recognition [ VRUs]. The objects infront of the car in traffic scene must be
+detected with high accuracy to achieve fully autonomous cars. The detection of object of interest is hard in urban areas,
+because of the wide variety of object appreances and occlusions caused by other objects. The similarities of object of interest with other or to the background and physical effects like cast shadows or reflections can make the distinction difficult. [cite: Computer Vision for Autonomous Vehicles: Problems, Datasets and State-of-the-Art]. We have seen examples of Computer Vision failing to recognize cyclists, and failure in recognizing pedestrians in dim light.  Though most
 autonomous cars are able to classify pedestrians, it would largely help us deal with the cyclists differently.
-Vulnerable road users can be detected using 2 methods.
-(1) Sensor based approach
-(2)Vision based approach
+Vulnerable road users can be detected using 2 methods.\\
+(1) Sensor based approach\\
+(2)Vision based approach\\
+
+\subsection{Vision based approach:}
+In vision based approach only data from the cameras are used to distinguish between objects.
+Computer vision means the machine is able to get some meaningful information from an image or video. Human vision is highly
+developed with the ability to understand and classify the whole scene at once, However, it was a difficult problem to gain decent 
+vision results with computers up until recently, as the computers did not have the processing abilities. Though, the concept of computer vision has
+been around since the 1950's, only recently we have been able to practically implement these theories. Thanks to huge volumes of 
+images and videos available online. The advance in hardware with high processing power GPUs is another reason for the recent success 
+which is a contributuion from the gaming industry.\\
+
+The object detection task can be addressed with a variety of different of sensors. Cameras are the cheapest and most commonly used type of sensors for the detection of ob-
+jects. The visible spectrum (VS) is typically used for daytime detections whereas the infrared spectrum can be used for night-time detection. Thermal infrared (TIR) cameras capture relative temperature which allows to distinguish warm objects like pedestrians from cold objects like vegetation or the road.[cite: Computer Vision for Autonomous Vehicles: Problems, Datasets and State-of-the-Art]
+
+
+\subsection{Sensor based approach:}
 In sensor based approach, the autonomous vehicles are mounted with sensors such as LiDAR systems.
-The depth information of the sensor based systems result in higher accuracy and these are considered supe-
-rior and known to have high accuaracy in today’s research field. However, these methods will not be portable
-as they are dependent on the hardware of the car. Sensors are also expensive and some car manufacturers
-are reluctant to compramise the look of the car for smart features.
+The depth information of the sensor based systems result in higher accuracy in detecting an object and localizing it. These are considered supe-
+rior and known to have high accuaracy in today’s research field.Depending on the weather conditions or material properties it can be problematic
+to rely on a single type of sensor alone. Visible spectrum cameras and laser scanners are affected by reflective or transparent surfaces while
+hot objects (like engines) or warm temperatures can influence
+Thermal infrared cameras. [cite: Computer Vision for Autonomous Vehicles: Problems, Datasets and State-of-the-Art]. A combination of sensors would be the most apt method to 
+generate high accuracy results.(Enzweiler, M., & Gavrila, D. M. (2011). A multilevel mixture-of-experts
+framework for pedestrian classification. IEEE Trans. on Image Processing
+(TIP), 20, 2967–2979.); [Chen, X., Kundu, K., Zhu, Y., Ma, H., Fidler, S., & Urtasun, R. (2016b). 3d
+object proposals using stereo imagery for accurate object class detection.
+arXiv.org, 1608.07711.][González, A., Vázquez, D., Lóopez, A. M., & Amores, J. (2016). On-board ob-
+ject detection: Multicue, multimodal, and multiview random forest of local
+experts. IEEE Trans. on Cybernetics, .]  These papers allow mention in depth about robust methods for sensor fusion. Sensors are also expensive and some car manufacturers are reluctant to compramise the look of the car for smart features.\\
+
 In this paper, we will discuss and try to identify cyclists as accurately and quickly as possible using
 vision based approach. Accuracy and Speed are both very important aspects that could highly influence the
 outcome in road-safety systems. In this papers, we will compare the performance of different Convolutional
@@ -76,19 +101,47 @@ the goal.
 
 \section{Literature Review}
 
+Brief history of computer vision in Autonomous cars:
+
+Around the time of 1992 - 2000 statistical machine learning models such as Support Vector Machine, Boosting started to gain popularity. The VJ detector by Viola-Jones [tobecitedcitexiaofei li new 2016] with it's detection technology was the first ground-breaking object detection algorithm, which was able to detected faces with limited amount of computational power available at the time.
+
+SIFT model by David Lowe, 1999 feature based object detection. The idea is to match the features of 2 images that are constant or invariant. Based on these features the objects were classified into that particular class. This is a more efficient method than pattern matching the whole image. Spatial Pyramid matching, there are certain patterns in the image, that will hint us about what the image could be about. A varitation of this model is Histogram of Gradients[HoG], [cite: Dalal and Trings 2005] and Deformable part Model [cite: Felzenswalb, McAllester, Ramnam, 2009] performed well on Human detection. 
+
+In 2012, Convolutional neural networks[cite: Alex Krizhevsky, Ilya Sutskever, Geoffery E Hilton, 2012] out-performed all the other models significantly in the annual Image-net object recognition challenge, which is the bench-mark dataset for object recognition. 
+
+
+As we are following a vision based object detection approach using using 2-D images, Convolutional neural networks are the obvious solution. They have outperformed all the previous
+detection methods by significant margins. There are various variations of convolutional neural networks to choose from based on the problem at hand. We will try to work with few variations of CNNs.
+
 \subsection{Detection}
-Pedestrian detection has taken off really well since the introduction of deep learning neural networks. Archi-
-tectures like Convolutional neural networks have done exceptionally well. Early methods like VJ detector by
-Viola-Jones [tobecitedcitexiaofei li new 2016], Histogram of Oriented Gradients by Dalal and Triggs in 2005
-[12], Based on HOG detector, Deformable Part Model (DPM) was designed to weaken the deformation effect
-of non-rigid objects by Felzenswalb et al. in 2008 [13]. Another variant method ChnFtrs was applied to
-deploy multiple registered images channels for classification by Dollar et al. in 2009 [14]. In 2013, ConvNet
-model was introduced to yield compet- itive results on major pedestrian detection benchmarks by Sermanet
-et al. [15].
-In paper,
+
+The common methods followed during any traffic scene detections are,\\
+1)Preprocessing the images\\
+2)Extracting region of interest\\
+3)Object classification\\
+4)Verification\\
+
+\subsubsection{1.Preprocessing of images}
+
+\subsubsection{2.Extracting region of interest}
+
+\subsubsection{3.Object classification}
+
+\subsubsection{4.Verification}
+
+
+
+
 
 \subsection{Convolutional neural networks}
-Convolutional neural networks were introduced in 2014, ever since then they have bet all the previous meth-
+
+Computer vision approach in detecting vulnerable road users 
+
+Brief:\\
+Convolutional neural networks were introduced in 2014, ever since then they have been able to produce phenomenol results in the field of computer vision.
+These are often the most sought after method while trying to solve any object detection or localization tasks. 
+
+ ever since then they have bet all the previous meth-
 ods in terms of object detection. In 2014, R-CNN [Regional Convolutional neural network] won the imagenet
 challenge by a significant margin compared to previous methods. It used a region proposal method on the
 image, then each proposed region was fed to seperate CNN and finally the object was detected.
