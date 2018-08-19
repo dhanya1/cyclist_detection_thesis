@@ -6,19 +6,11 @@
 \usepackage[titletoc]{appendix}
 \usepackage{graphicx}
 \graphicspath{ {./images/} }
-\setcounter{secnumdepth}{2}
 
 %% INCLUDE FOLLOWING BLOCK FOR BIBLIOGRAPHY
-\usepackage[
-backend=biber,
-style=alphabetic,
-citestyle=authoryear]{biblatex}
-\renewcommand*{\bibopenparen}{[}
-\renewcommand*{\bibcloseparen}{]}
-\renewcommand*{\finalandcomma}{,}
-\renewcommand*{\finalnamedelim}{, and~}
-\renewcommand*\bibnamedash{\rule[0.48ex]{3em}{0.14ex}\space}
-\addbibresource{example_under_construction.bib} 
+\usepackage[backend=bibtex]{biblatex}
+\bibliographystyle{plain}
+\bibliography{example_under_construction} 
 \RequirePackage{listings}
 \lstset{language=Python}
 
@@ -31,9 +23,9 @@ citestyle=authoryear]{biblatex}
 \vspace{1cm}
 {\scshape\Large Master's Thesis \par}
 \vspace{1.5cm}
-{\huge\bfseries Pedestrian Action Recognition\par}  
+{\huge\bfseries Cyclist Detection\par}  
 \vspace{0.5cm}
-{\Large\bfseries Classification and tracking \par}
+{\Large\bfseries Detection and Classification \par}
 \vspace{2cm}
 {\Large\itshape Dhanya Sringeri Jayachandra \par}
 \vfill
@@ -43,6 +35,30 @@ Dr. Gregory Provan
 {\large \today\par}
 \end{titlepage}
 
+
+
+\hfil {\LARGE \textbf{Abstract}}\hfil
+
+\vspace{1.5cm}
+{\Large In this paper, we will discuss and try to classify the different views of cyclists with respect to the position of the car. Cyclist detection is considered as a challenging problem in the field of object detection owing to the variances in the view of cyclists, can make the object look completely different from one another. Little work has been dedicated towards identifying cyclists in the past. Most of the self-driving cars focus on pedestrian detection. But, the behaviour of cyclists and pedestrians are different and cyclists have to be identified and handled differently. There are reported incidences of cyclists getting into an accident with highly reliable and efficient autonomous systems. This is only stressing on the point that more attention is to be given to cyclists. Categorizing the cyclists into different views would help the car understand the situation better and take appropriate decisions. Suppose, if a cyclist is crossing the road in front of the car, the only option for the car is to slow down or stop. But, if a cyclist is in just riding in front of the car, this view is completely different and the car just have to treat the cyclist like any other object. These 2 actions looks completely different from a computer vision point of view, so identifying them and classifying them in real - world scenario is what we are trying to achieve in this thesis. Accuracy and Speed are both very important aspects that could highly influence the outcome in road-safety systems. Various types of Convolutional Neural Networks approaches will be applied and we can compare the advantages of one model over the other. Improving accuracy of object detection and classifying are our main goal.\par}
+\clearpage
+
+\hfil {\LARGE \textbf{Acknowledgements}}\hfil
+
+\vspace{1.5cm}
+{\Large I would like to express my profound gratitude to my academic advisor, Dr. Gregory Provan, for his scholastic advice and technical guidance throughout this research. His devotion, patience, and focus on excellence allowed me to reach this important milestone in my life. I also wish to extend my acknowledgements to the company Valeo labs, Tuem especially to Dr.Ciaran Hughes and Jonathan Horgan for their continued support, feedback, guidance and suggestions.
+I wish to thank University College Cork for providing unlimited assistance and support during my study. \par}
+
+\clearpage
+
+\hfil {\LARGE \textbf{Dedication}}\hfil
+
+\vspace{1.5cm}
+{\Large This study is dedicated to my husband, Hithyshi Krishnamurthy, and my parents, Jayachandra and Shakila, also my in-laws Vinoda and Krishnamurthy. Without their continued and unconditional love and support, I would not be the person I am today.\par}
+\vfill
+\clearpage
+
+\setcounter{secnumdepth}{2}
 \setcounter{tocdepth}{2}
 \tableofcontents
 \clearpage
@@ -50,250 +66,221 @@ Dr. Gregory Provan
 \listoffigures
 \clearpage
 
-\section{Abstract}
-
-In this paper, we will discuss and try to classify pedestrians from cyclists as accurately and quickly as possible. Accuracy and Speed are both very important aspects that could highly influence the outcome in road-safety systems. Various types of Convolutional Neural Networks approches will be applied and we can compare the advantages of one model over the other. Improving accuray of object detection and tracking are our main goal.
-\clearpage
 
 \section{Introduction}
 
 Road-Safety is a crucial requirement in all Autonomous and Advanced Driver Assistance systems. The smart
-cars are facing many challenges in Vulnerable road users recognition [ VRUs]. The objects infront of the car in traffic scene must be
+cars are facing many challenges in Vulnerable road users recognition [ VRUs]. The objects in front of the car in traffic scene must be
 detected with high accuracy to achieve fully autonomous cars. The detection of object of interest is hard in urban areas,
-because of the wide variety of object appreances and occlusions caused by other objects. The similarities of object of interest with other or to the background and physical effects like cast shadows or reflections can make the distinction difficult. [cite: Computer Vision for Autonomous Vehicles: Problems, Datasets and State-of-the-Art]. We have seen examples of Computer Vision failing to recognize cyclists, and failure in recognizing pedestrians in dim light.  Though most
+because of the wide variety of object appearances and occlusions caused by other objects. The similarities of object of interest with other or to the background and physical effects like cast shadows or reflections can make the distinction difficult. \cite{janai_computer_2017}. We have seen examples of Computer Vision failing to recognize cyclists, and failure in recognizing pedestrians in dim light.  Though most
 autonomous cars are able to classify pedestrians, it would largely help us deal with the cyclists differently.
 Vulnerable road users can be detected using 2 methods.\\
 (1) Sensor based approach\\
-(2)Vision based approach\\
+(2)Vision based approach
 
 \subsection{Vision based approach:}
-In vision based approach only data from the cameras are used to distinguish between objects.
+
+  In vision based approach only data from the cameras are used to distinguish between objects.
 Computer vision means the machine is able to get some meaningful information from an image or video. Human vision is highly
 developed with the ability to understand and classify the whole scene at once, However, it was a difficult problem to gain decent 
 vision results with computers up until recently, as the computers did not have the processing abilities. Though, the concept of computer vision has
 been around since the 1950's, only recently we have been able to practically implement these theories. Thanks to huge volumes of 
 images and videos available online. The advance in hardware with high processing power GPUs is another reason for the recent success 
-which is a contributuion from the gaming industry.\\
+which is a contribution from the gaming industry.
 
-The object detection task can be addressed with a variety of different of sensors. Cameras are the cheapest and most commonly used type of sensors for the detection of ob-
-jects. The visible spectrum (VS) is typically used for daytime detections whereas the infrared spectrum can be used for night-time detection. Thermal infrared (TIR) cameras capture relative temperature which allows to distinguish warm objects like pedestrians from cold objects like vegetation or the road.[cite: Computer Vision for Autonomous Vehicles: Problems, Datasets and State-of-the-Art]
+The object detection task can be addressed with a variety of different of sensors. Cameras are the cheapest and most commonly used type of sensors for the detection of objects. The visible spectrum (VS) is typically used for detection during daytime whereas the infrared spectrum can be used for night-time detection. Thermal infrared (TIR) cameras capture relative temperature which allows to distinguish warm objects like pedestrians from cold objects like vegetation or the road.\cite{janai_computer_2017}
 
 
 \subsection{Sensor based approach:}
-In sensor based approach, the autonomous vehicles are mounted with sensors such as LiDAR systems.
-The depth information of the sensor based systems result in higher accuracy in detecting an object and localizing it. These are considered supe-
-rior and known to have high accuaracy in today’s research field.Depending on the weather conditions or material properties it can be problematic
+
+  In sensor based approach, the autonomous vehicles are mounted with sensors such as LiDAR systems.
+The depth information of the sensor based systems result in higher accuracy in detecting an object and localizing it. These are considered superior and known to have high accuracy in today’s research field.Depending on the weather conditions or material properties it can be problematic
 to rely on a single type of sensor alone. Visible spectrum cameras and laser scanners are affected by reflective or transparent surfaces while
 hot objects (like engines) or warm temperatures can influence
-Thermal infrared cameras. [cite: Computer Vision for Autonomous Vehicles: Problems, Datasets and State-of-the-Art]. A combination of sensors would be the most apt method to 
-generate high accuracy results.(Enzweiler, M., & Gavrila, D. M. (2011). A multilevel mixture-of-experts
-framework for pedestrian classification. IEEE Trans. on Image Processing
-(TIP), 20, 2967–2979.); [Chen, X., Kundu, K., Zhu, Y., Ma, H., Fidler, S., & Urtasun, R. (2016b). 3d
+Thermal infrared cameras. \cite{janai_computer_2017}. It is better to use a combination of sensors to generate high accuracy results\cite{enzweiler_multilevel_2011}. A multilevel mixture-of-experts framework for pedestrian classification. IEEE Trans. on Image Processing\cite{chen_3d_2016}
 object proposals using stereo imagery for accurate object class detection.
-arXiv.org, 1608.07711.][González, A., Vázquez, D., Lóopez, A. M., & Amores, J. (2016). On-board ob-
-ject detection: Multicue, multimodal, and multiview random forest of local
-experts. IEEE Trans. on Cybernetics, .]  These papers allow mention in depth about robust methods for sensor fusion. Sensors are also expensive and some car manufacturers are reluctant to compramise the look of the car for smart features.\\
-
+[González, A., Vázquez, D., Lóopez, A. M., \& Amores, J. (2016). On-board object detection: Multicue, multimodal, and multiview random forest of local
+experts. IEEE Trans. on Cybernetics].  These papers allow mention in depth about robust methods for sensor fusion. Sensors are also expensive and some car manufacturers are reluctant to compromise the look of the car for smart features.
 In this paper, we will discuss and try to identify cyclists as accurately and quickly as possible using
 vision based approach. Accuracy and Speed are both very important aspects that could highly influence the
-outcome in road-safety systems. In this papers, we will compare the performance of different Convolutional
-neural network architectures, their performance on the vision-based networks. We can compare the perfor-
-mance of one model over the other. Improving accuray of object detection with each new network tried is
+outcome in road-safety systems. In this papers, we will compare the performance of different Convolutional neural network architectures, their performance on the vision-based networks. We can compare the performance of one model over the other. Improving accuracy of object detection with each new network tried is
 the goal.
-
-\clearpage
 
 \section{Literature Review}
 
-Brief history of computer vision in Autonomous cars:\\
+Brief history of Computer vision in Autonomous cars:\\
+Around the time of 1992 - 2000 statistical machine learning models such as Support Vector Machine, Boosting started to gain popularity. The VJ detector by Viola-Jones \cite{viola_detecting_2003} with it's detection technology was the first ground-breaking object detection algorithm, which was able to detected faces with limited amount of computational power available at the time. SIFT model by David Lowe, 1999 feature based object detection. The idea is to match the features of 2 images that are constant or invariant. Based on these features the objects were classified into that particular class. This is a more efficient method than pattern matching the whole image. Another method, Spatial Pyramid matchingis based on finding certain patterns in the image, that will hint us about what the image could be about. A variation of this model is Histogram of Gradients[HoG], \cite{dalalHistogramsOrientedGradients} and Deformable part Model \cite{felzenszwalbObjectDetectionDiscriminatively2010}  performed well on Human detection.  In 2012, Convolutional neural networks\cite{krizhevskyImageNetClassificationDeep2012} out-performed all the other models significantly in the annual Image-net object recognition challenge, which is the bench-mark dataset for object recognition. Convolutional neural networks are performing well in classification, detection and segmentation.As we are following a vision based object detection approach using using 2-D images, Convolutional neural networks are the obvious solution. They have outperformed all the previous detection methods by significant margins. There are various variations of convolutional neural networks to choose from based on the problem at hand. We will try to work with few variations of CNNs.
 
-Around the time of 1992 - 2000 statistical machine learning models such as Support Vector Machine, Boosting started to gain popularity. The VJ detector by Viola-Jones [tobecitedcitexiaofei li new 2016] with it's detection technology was the first ground-breaking object detection algorithm, which was able to detected faces with limited amount of computational power available at the time.\\
-
-SIFT model by David Lowe, 1999 feature based object detection. The idea is to match the features of 2 images that are constant or invariant. Based on these features the objects were classified into that particular class. This is a more efficient method than pattern matching the whole image. Spatial Pyramid matching, there are certain patterns in the image, that will hint us about what the image could be about. A varitation of this model is Histogram of Gradients[HoG], [cite: Dalal and Trings 2005] and Deformable part Model [cite: Felzenswalb, McAllester, Ramnam, 2009] performed well on Human detection. \\
-
-In 2012, Convolutional neural networks[cite: Alex Krizhevsky, Ilya Sutskever, Geoffery E Hilton, 2012] out-performed all the other models significantly in the annual Image-net object recognition challenge, which is the bench-mark dataset for object recognition. Convolutional neural networks are performing well in classification, detection and segmentation.\\
-
-As we are following a vision based object detection approach using using 2-D images, Convolutional neural networks are the obvious solution. They have outperformed all the previous
-detection methods by significant margins. There are various variations of convolutional neural networks to choose from based on the problem at hand. We will try to work with few variations of CNNs.\\
-
+Not many research papers have focused on the problem of cyclist detection. In 2016, Xiaofei Liand team presented a paper 
 \subsection{Detection}
 
-The common methods followed during any traffic scene detections are,\\
-1)Preprocessing the images\\
-2)Extracting region of interest\\
-3)Object classification\\
-4)Verification\\
+The common methods followed during any traffic scene detections are,
+\begin{enumerate}
+  \item Preprocessing the images
+  \item Extracting region of interest
+  \item Object classification
+  \item Verification
+\end{enumerate}
+
 
 \subsubsection{1.Preprocessing of images}
+sdfjksdf
 
 \subsubsection{2.Extracting region of interest}
+sdjdklsfm
 
 \subsubsection{3.Object classification}
+sdksdflkdsf
 
 \subsubsection{4.Verification}
+dsfkdslf;.
 
 
 
 
 \section{State of Art}
+sdsdf
 
 \subsection{Convolutional neural networks}
+dfdgd
 
-\textbf{Convolutional neural layer} are different from fully connected layers in the sense that they preserve the spatial structure of the image. Then we convolve the image with a filter, by sliding the filter over the image spatially and compute dot products. Filters have smaller spatial area compared to the original image, but they always have the same depth as the image. Depending on the size of the filter and the image, the size of the output always changes. \\
+\subsubsection{Convolutional neural layer} are different from fully connected layers in the sense that they preserve the spatial structure of the image. Then we convolve the image with a filter, by sliding the filter over the image spatially and compute dot products. Filters have smaller spatial area compared to the original image, but they always have the same depth as the image. Depending on the size of the filter and the image, the size of the output always changes. 
 
-\[activation map =  w^T * x + b \],\\
+\[activation map =  w^T * x + b \] 
+where,\\
+w = weights matrix\\
+b = bias
 
-where w = weights matrix,\\
-b = bias\\
+\subsubsection{Convolutional neural network} 
+Convolutional neural network consists of sequence of convolutional layers combined with activation functions, the output of each layer forms the input to the succeeding layer, just like other neural networks. The network follows an hierarchical approach in terms of learning from the data. In the lower layers, the filters learn low level features like edges and progressively learns more high level features with every layer after that. This hierarchical recognition is similar to how human visual cortex works. The neurons first understand the simple concepts and then passes the information to neurons deeper level. At each higher level the neurons understand more complex features.
 
-\includegraphics{Convolution}
+Computer vision approach in detecting vulnerable road users 
 
-\textbf{Convolutional neural network} consists of sequence of convolutional layers combined with activation functions, the output of each layer forms the input to the succeding layer, just like other neural networks. The network follows an hierarchial approach in terms of learning from the data. In the lower layers, the filters learn low level features like edges and progressively learns more high level features with every layer after that. This hierarchial recognition is similar to how human visual cortex works. The neurons first understand the simple concepts and then passes the information to neurons deeper level. At each higher level the neurons understand more complex features.\\
+Brief:\\
+Convolutional neural networks were introduced in 2014, ever since then they have been able to produce phenomenal results in the field of computer vision.
+These are often the most sought after method while trying to solve any object detection or localization tasks. 
+ever since then they have bet all the previous methods in terms of object detection.
 
-\textbf{Common Design choices}\\
+\subsubsection{Common Design choices}
 
-\textit{Filter:} Each filter looks for a specific feature in the image. So, when we are trying to detect a certain object in the image, we use multiple filters. Each filter after convolved with the image generates an activiation map. So, the number of activation maps is equal to the number of filters used. The filter size is usually in powers of 2\\
+\textit{Filter:} Each filter looks for a specific feature in the image. So, when we are trying to detect a certain object in the image, we use multiple filters. Each filter after convolved with the image generates an activation map. So, the number of activation maps is equal to the number of filters used. The filter size is usually in powers of 2
 
 \textit{Stride:} It gives the effect affect of downsampling the image at each layer. It also results in smaller activation maps after each layer. This would also result in smaller number of parameters to deal with.\\
-Output size = (N -F)/ stride + 1\\
+Output size = (N -F)/ stride + 1
 
 where, N = Image size,\\
 F = Filter size,\\
-stride = Number of steps taken in the next direction\\
+stride = Number of steps taken in the next direction
 
 \textit{Zero-padding:}\\
 If the stride and zero-padding are of the same size, then the size of the image will remain the same. Then the formula of output size changes to,
-Output size = (N+2*P - F)/ stride + 1, \\
+Output size = (N+2*P - F)/ stride + 1, 
 
-where P = Padding size.\\
+where P = Padding size.
 
-\textit{Back-propagation:}\\ [ Copied from wikipedia, needs to be modified.]
+\textit{Number of Neurons:}\\
+The product of the output height and width gives the total number of neurons in a feature map, say Map Size. The total number of neurons (output size) in a convolutional layer, then, is Map Size*Number of Filters.
+
+\textit{Output Size:}\\
+The output height and width of a convolutional layer is (Input Size – Filter Size + 2*Padding)/Stride + 1. This value must be an integer for the whole image to be fully covered. If the combination of these parameters does not lead the image to be fully covered, the software by default ignores the remaining part of the image along the right and bottom edge in the convolution.
+
+\textit{Back-propagation:}\\  
+Copied from wikipedia, needs to be modified.
 Backpropagation is a method used in artificial neural networks to calculate a gradient that is needed in the calculation of the weights to be used in the network.[1] It is commonly used to train deep neural networks,[2] a term referring to neural networks with more than one hidden layer.[3] 
 
-The backpropagation algorithm has been repeatedly rediscovered and is equivalent to automatic differentiation in reverse accumulation mode[citation needed][clarification needed]. Backpropagation requires the derivative of the loss function with respect to the network output to be known, which typically (but not necessarily) means that a desired target value is known. For this reason it is considered to be a supervised learning method, although it is used in some unsupervised networks such as autoencoders. Backpropagation is also a generalization of the delta rule to multi-layered feedforward networks, made possible by using the chain rule to iteratively compute gradients for each layer. It is closely related to the Gauss–Newton algorithm, and is part of continuing research in neural backpropagation. Backpropagation can be used with any gradient-based optimizer, such as L-BFGS or truncated Newton[citation needed][clarification needed]. 
+The backpropagation algorithm has been repeatedly rediscovered and is equivalent to automatic differentiation in reverse accumulation mode[citation needed][clarification needed]. Back propagation requires the derivative of the loss function with respect to the network output to be known, which typically (but not necessarily) means that a desired target value is known. For this reason it is considered to be a supervised learning method, although it is used in some unsupervised networks such as autoencoders. Back propagation is also a generalization of the delta rule to multi-layered feedforward networks, made possible by using the chain rule to iteratively compute gradients for each layer. It is closely related to the Gauss–Newton algorithm, and is part of continuing research in neural backpropagation. Backpropagation can be used with any gradient-based optimizer, such as L-BFGS or truncated Newton[citation needed][clarification needed]. 
 
 Mini-batch Stochastic Gradient descent:
 
 Loop:
 1. Sample a batch of data\\
-2. Forward propagatation it through the graph, get loss\\
-3. Backpropagation to calculate gradients\\
-4. Update the parameters using the gradient\\
+2. Forward propagation it through the graph, get loss\\
+3. Back propagation to calculate gradients\\
+4. Update the parameters using the gradient
 
+\subsubsection{Other layers in Convolutional neural network}
 
+\textit{Input layer:}\\
+The image input layer defines the size of the input images of a convolutional neural network and contains the raw pixel values of the images. The size of an image corresponds to the height, width, and the number of color channels of that image. This layer can also perform data normalization by subtracting the mean image of the training set from every input image.
 
-\textbf{Other layers in Convolutional neural network}\\
 \textit{Pooling layer:}\\
 It takes the activation map from the previous layer and spatially downsamples it, hence making the representation easier. The input depth is going to be the same as output depth.
-Most popular apprach of pooling is Max pooling. Max pooling partitions the input image into a set of non-overlapping rectangles and, for each such sub-region, outputs the maximum.\\
+Most popular approach of pooling is Max pooling. Max pooling partitions the input image into a set of non-overlapping rectangles and, for each such sub-region, outputs the maximum.
 
 Some design choices with pooling layers are:\\
 1) The spatial extent ie F or filter size\\
-2) The stride S \\
+2) The stride S 
 
 If the dimension of input is W1 * H1 * D1, then the output size of pooling layer W2 * H2 * D2 can be calculated as:\\
 W2 = (W1 - F)/S + 1\\
 H2 = (H1 - F)/S + 1\\
-D2 = D1\\
+D2 = D1
 
-The function of this layer is to reduce the number of computation parameters, hence it does not introduce any new parameters. \\
+The function of this layer is to reduce the number of computation parameters, hence it does not introduce any new parameters. 
 
 \textit{Fully connected layer:}\\
-This is usually used at the end of convolutional neural networks. Here, we aggregate all the features detected and then use it to classify what has been detected. We can also get the score out of it.
+This is usually used at the end of convolutional neural networks. All the neurons of the present layer connects to all the neurons of the previous layer. Here, we aggregate all the features detected and then use it to classify what has been detected. We can also get the score out of it. These layers usually have huge number of parameters to calculate.
+
+\textit{Normalization layer:}
+
+** Copied**
+The normalization layers are introduced between convolutional layers and pooling layers to normalize the irregularities and speed up network training and reduce the sensitivity to network initialization. The layer first normalizes the activations of each channel by subtracting the mini-batch mean and dividing by the mini-batch standard deviation. Then, the layer shifts the input by an offset β and scales it by a scale factor γ. β and γ are themselves learnable parameters that are updated during network training. Create a batch normalization layer using batch Normalization Layer.
+
+\textit{Dropout Layer:}
+
+A dropout layer randomly sets the layer’s input elements to zero with a given probability. Create a dropout layer using the dropout Layer function.
+
+Although the output of a dropout layer is equal to its input, this operation corresponds to temporarily dropping a randomly chosen unit and all of its connections from the network during training. So, for each new input element, train Network randomly selects a subset of neurons, forming a different layer architecture. These architectures use common weights, but because the learning does not depend on specific neurons and connections, the dropout layer might help prevent overfitting [7], [2]. Similar to max- or average-pooling layers, no learning takes place in this layer.
 
 \subsubsection{CNN Architectures}
 
 \textbf{AlexNet:} \\
-AlexNet[cite: AlexNet author] was the winner of Imagenet challenge in 2012. It outperformed all the existing methods for image classification and was the first network to put convolutional neural network on the map. From here on CNN's gained huge popularity in the field on Computer vision. It has 5 convolutional layers and 2 fully connected layers before the final classification of output classes. They have ReLU as activation 
-
-
+AlexNet[cite: AlexNet author] was the winner of Imagenet challenge in 2012. It outperformed all the existing methods for image classification and was the first network to put convolutional neural network on the map. From here on CNN's gained huge popularity in the field on Computer vision. It has 5 convolutional layers and 2 fully connected layers before the final classification of output classes. They have ReLU as activation function. \\
+\textbf{ZF-net:}\\
+In 2013, ZF-net[cite: ZFNet author]  won the imagenet challenge. Similar to Alex-net with different hyper-parameters. ZF-Net had 8 layers\\
 \textbf{VGG:}\\
-
-\textbf{GoogleNet:}\\
-
+In 2013, runnerup of imagenet classification challenge, VGG-Net was the best network for solving localization challenge. It had 2 variations with 16 layer and 18 layers deep model.They kept very small filters and periodic pooling.\\ 
+\textbf{GoogLeNet:}\\
+In 2013, winner of imagenet classification challenge was GoogleNet. It was 22 layers deep model.They introduced the new concept called inception modules. \\
 \textbf{ResNet:}\\
+This is the current best architecture in the field. Resnet is 152 layers deep. It won almost all the challenges in the year 2015. Proving that deep networks are clearly better than anything else. This is the chosen architecture for training in our experiment
+ResNet stands for residual networks, here we use networks to fit a residual mapping instead of directly trying to fit a desired underlying mapping. \\
 
+\subsection{Object detection Algorithms:}
 
+\subsubsection{Regional - Convolutional neural networks:}
+To bypass the problem of selecting a huge number of regions, Ross Girshick et al. proposed a method where we use selective search to extract just 2000 regions from the image and he called them region proposals. Therefore, now, instead of trying to classify a huge number of regions, you can just work with 2000 regions. These 2000 region proposals are generated using the selective search algorithm which is written below.
 
+Problems with R-CNN
 
+It still takes a huge amount of time to train the network as you would have to classify 2000 region proposals per image.
+It cannot be implemented real time as it takes around 47 seconds for each test image.
+The selective search algorithm is a fixed algorithm. Therefore, no learning is happening at that stage. This could lead to the generation of bad candidate region proposals.
 
+\subsubsection{Fast - RCNN:}
 
-Computer vision approach in detecting vulnerable road users 
+The same author of the previous paper(R-CNN) solved some of the drawbacks of R-CNN to build a faster object detection algorithm and it was called Fast R-CNN. The approach is similar to the R-CNN algorithm. But, instead of feeding the region proposals to the CNN, we feed the input image to the CNN to generate a convolutional feature map. From the convolutional feature map, we identify the region of proposals and warp them into squares and by using a RoI pooling layer we reshape them into a fixed size so that it can be fed into a fully connected layer. From the RoI feature vector, we use a softmax layer to predict the class of the proposed region and also the offset values for the bounding box.
 
-Brief:\\
-Convolutional neural networks were introduced in 2014, ever since then they have been able to produce phenomenol results in the field of computer vision.
-These are often the most sought after method while trying to solve any object detection or localization tasks. 
+The reason “Fast R-CNN” is faster than R-CNN is because you don’t have to feed 2000 region proposals to the convolutional neural network every time. Instead, the convolution operation is done only once per image and a feature map is generated from it.
 
+From the above graphs, you can infer that Fast R-CNN is significantly faster in training and testing sessions over R-CNN. When you look at the performance of Fast R-CNN during testing time, including region proposals slows down the algorithm significantly when compared to not using region proposals. Therefore, region proposals become bottlenecks in Fast R-CNN algorithm affecting its performance.
 
+\subsubsection{Faster - RCNN:}
 
+Both of the above algorithms(R-CNN \& Fast R-CNN) uses selective search to find out the region proposals. Selective search is a slow and time-consuming process affecting the performance of the network. Therefore, Shaoqing Ren et al. came up with an object detection algorithm that eliminates the selective search algorithm and lets the network learn the region proposals.
 
+Similar to Fast R-CNN, the image is provided as an input to a convolutional network which provides a convolutional feature map. Instead of using selective search algorithm on the feature map to identify the region proposals, a separate network is used to predict the region proposals. The predicted region proposals are then reshaped using a RoI pooling layer which is then used to classify the image within the proposed region and predict the offset values for the bounding boxes.
 
- ever since then they have bet all the previous meth-
-ods in terms of object detection. In 2014, R-CNN [Regional Convolutional neural network] won the imagenet
-challenge by a significant margin compared to previous methods. It used a region proposal method on the
-image, then each proposed region was fed to seperate CNN and finally the object was detected.
-Fast-RCNN introduced using the regional proposal method on the feature map that was extractred by
-the CNN, hence saving a lot of computation time. Faster-RCNN as we have used in this model, uses it’s
-own region proposal method based on the values computed by during the feature map generator instead of
-using an external regional proposal algorithm. This makes the system 100 times faster than RCNN.
-Faster RCNN consists of 2 parts:
-(1)Feature Extractor\\
-(2)Region Proposal network\\
-\subsubsection{Feature Extractor}:
-The feature extractor localises the parts of the image based on features. Some of the popular feature
-extractors are VGGnet, Resnet and Inception. So far, Resnet is known to have the highest accuracy. It is
-a very deep model with 101 hidden layers. Due to gradient explosion problem, it was impossible to have
-such deep layers up until the invention of Resnet. Resnet won the imagenet object detection challenge in
-2015, beating other competitors in the field by significant margin. We will be using Resnet as our feature
-extractor in our model.\\
-\subsection{Region Proposal network}:
-Another CNN model that is considered in this setting is,
-Faster Region based convolutional neural networks:\\
-\section{Datasets}
+From the above graph, you can see that Faster R-CNN is much faster than it’s predecessors. Therefore, it can even be used for real-time object detection.
 
-The dataset that is considered in this experiment is available for public as tsinga-dailmer dataset/
-
-\section{Experiment}:
-I have divided the dataset of cyclists in 3 different views. Narrow, Intermediate and wide based on the
-aspect ratio of the bounding box of cyclists. It’s important to train the network on the different views of
-cyclists seperately as the cyclists look completely different from different views.
-
-\subsection{Training:}
-
-\subsubsection{Framework:}
-\subsection{Parameter optimization}
-Stride size: Reduced the stride size from 16 to 8, even though the computation time is longer, more
-information needs to processed.\\
-
-Further reduced the stride size of feature extractor from 8 to 4, to not miss out on any information.
-
-\subsection{Region Proposal network}
-Region proposal networks generate proposals from the image fed to the network which might contain
-the object. So, RPN is responsible for the network to decide if an object is in foreground or background.
-In the first stage anchor generator, I am reducing the stride, so that more regions are proposed and none of
-the small cyclists are missed out.
-I have 4 anchors of scales 0.25, 0.5, 0.75 and 1.0. Each anchor will have 3 boxes with aspect ratio of
-1:1(Intermidiate), 1:2(Narrow view), 2:1(Wide view).
-The maximum number of box proposals from the first stage was changed to 300. Used drop-out to
-avoid overfitting of the neurons and improve accuracy. Drop out increases the number of possible iterations
-required to converge. Hence, we increase the number of iterations.\\
-
-\subsection{Regularization:}
-Regularization modifies the objective function that we minimize by adding additional terms that penalize
-large weights. In other words, we change the objective function so that it becomes Error+f(), where f()
-grows larger as the components of grow larger and is the regularization strength (a hyper-parameter for
-the learning algorithm).\\
-
-\subsection{L2 Regularization}
-It can be implemented by augmenting the error function with the squared magnitude of all weights in
-the neural network. In other words, for every weight w in the neural network, we add 1/2 w**2 to the
-error function. The L2 regularization has the intuitive interpretation of heavily penalizing ”peaky” weight
-vectors and preferring diffuse weight vectors. This has the appealing property of encouraging the network
-to use all of its inputs a little rather than using only some of its inputs a lot. Of particular note is that dur-
-ing the gradient descent update, using the L2 regularization ultimately means that every weight is decayed
-linearly to zero. Because of this phenomenon, L2 regularization is also commonly referred to as weight decay.\\
+arly to zero. Because of this phenomenon, L2 regularization is also commonly referred to as weight decay.
 
 \subsection{Hard negative mining}
+n order to train a detector with TFODAPI you don’t need to provide negative examples: the trainer can use your labeled images as well for this purpose. The procedure is called online hard-negative mining and that is why: for each “negative” generated box (that is: such box that its overlap with any of the ground truth boxes is less than specified threshold) on feature map the classification loss is calculated (it has to be high as far as it is not labeled as any object instance), then these negative boxes are sorted by their respective loss in descending order and top-k of them are used for backpropagation. Three questions arise here.
+
+Well, in case of object detection, you most probably have not-so-many objects on training images (usually less than a dozen), so the largest area on the image is a background (otherwise it wouldn’t be called background, right?). So taking all of the negatives leads to a great imbalance of the dataset towards negative examples, and that is of no good for a good training. In order to keep your dataset balanced you can fix the number of negative examples per single positive one — in this case your dataset will always have a fixed ratio of class representatives (for example, 3/1).
+
+Imagine that you take random negatives. Random here means that we don’t take into account how hard for our model these examples are — and, probably, we sometimes will force our model to train on examples that are already chewed. Now imagine that you take only the hard ones. That’s it.
 
 \subsection{Hyper-parameter tuning}
 
@@ -304,17 +291,17 @@ This network is used with blah blah
 \section{Accuracy}
 
 \begin{center}
- \begin{tabular}{||c c c c||} 
+ \begin{tabular}{||c c c c c||} 
  \hline
- Model & Modifications & Narrow & Intermediate & Wide \\ [0.5ex] 
+ Model & Modifications & Narrow & Intermediate & Wide\\ [0.5ex] 
  \hline
-FasterRCNN +Resnet & No finetuning & 53.2 & 22 & 787 \\ 
+FasterRCNN +Resnet & No finetuning & 53.2 & 22 & 35\\ 
  \hline
-FasterRCNN +Resnet & Increased region proposals & 55 & 33 & 5415 \\
+FasterRCNN +Resnet & Increased region proposals & 55 & 33 & 37\\
  \hline
-FasterRCNN + Resnet & dropout & 59 & 32 & -\\
+FasterRCNN + Resnet & dropout & 59 & 32 & 39\\
  \hline
- R-FCN + Resnet & No finetuning & 50 & 33 & -\\
+ R-FCN + Resnet & No finetuning & 50 & 33 & 23\\
  \hline
 
  \hline
@@ -331,3 +318,6 @@ We could calculate the distance between car and cyclists to determine if any act
 \printbibliography
 
 \end{document}
+
+
+
