@@ -1,6 +1,6 @@
 % Created 2018-02-29 
 % Modified 2018-04-15
-\documentclass[11pt]{article}
+\documentclass[12pt]{article}
 \usepackage[a4paper,portrait,textwidth=18cm]{geometry}
 
 \usepackage[titletoc]{appendix}
@@ -23,7 +23,7 @@
 \vspace{1cm}
 {\scshape\Large Master's Thesis \par}
 \vspace{1.5cm}
-{\huge\bfseries Cyclist Detection\par}  
+{\huge\bfseries Cyclist Detection for Autonomous Cars\par}  
 \vspace{0.5cm}
 {\Large\bfseries Detection and Classification \par}
 \vspace{2cm}
@@ -40,7 +40,7 @@ Dr. Gregory Provan
 \hfil {\LARGE \textbf{Abstract}}\hfil
 
 \vspace{1.5cm}
-{\Large In this paper, we will discuss and try to classify the different views of cyclists with respect to the position of the car. Cyclist detection is considered as a challenging problem in the field of object detection owing to the variances in the view of cyclists, can make the object look completely different from one another. Little work has been dedicated towards identifying cyclists in the past. Most of the self-driving cars focus on pedestrian detection. But, the behaviour of cyclists and pedestrians are different and cyclists have to be identified and handled differently. There are reported incidences of cyclists getting into an accident with highly reliable and efficient autonomous systems. This is only stressing on the point that more attention is to be given to cyclists. Categorizing the cyclists into different views would help the car understand the situation better and take appropriate decisions. Suppose, if a cyclist is crossing the road in front of the car, the only option for the car is to slow down or stop. But, if a cyclist is in just riding in front of the car, this view is completely different and the car just have to treat the cyclist like any other object. These 2 actions looks completely different from a computer vision point of view, so identifying them and classifying them in real - world scenario is what we are trying to achieve in this thesis. Accuracy and Speed are both very important aspects that could highly influence the outcome in road-safety systems. Various types of Convolutional Neural Networks approaches will be applied and we can compare the advantages of one model over the other. Improving accuracy of object detection and classifying are our main goal.\par}
+{\Large In this paper, we will discuss and try to classify the different views of cyclists with respect to the position of the car using various deep learning algorithms. Cyclist detection is considered as a challenging problem in the field of object detection owing to the variances in the view of cyclists, can make the object look completely different from one another. Little work has been dedicated towards identifying cyclists in the past. Most of the self-driving cars focus on pedestrian detection. But, the behaviour of cyclists and pedestrians are different and cyclists have to be identified and handled differently. There are reported incidences of cyclists getting into an accident with highly reliable and efficient autonomous systems. This is only stressing on the point that more attention is to be given to cyclists. Categorizing the cyclists into different views would help the car understand the situation better and take appropriate decisions. Suppose, if a cyclist is crossing the road in front of the car, the only option for the car is to slow down or stop. But, if a cyclist is in just riding in front of the car, this view is completely different and the car just have to treat the cyclist like any other object. These 2 actions looks completely different from a computer vision point of view, so identifying them and classifying them in real - world scenario is what we are trying to achieve in this thesis. Accuracy and Speed are both very important aspects that could highly influence the outcome in road-safety systems. While, object detection from a fixed point camera might be more easier to interpret, the objective of this paper is to develop a algorithm that can be used by moving car, so the algorithm has to generalize well for all backgrounds and lighting conditions. Various types of Convolutional Neural Networks approaches will be applied and we can compare the advantages of one model over the other. Improving accuracy of object detection and classifying are our main goal.\par}
 \clearpage
 
 \hfil {\LARGE \textbf{Acknowledgements}}\hfil
@@ -69,80 +69,54 @@ I wish to thank University College Cork for providing unlimited assistance and s
 
 \section{Introduction}
 
-Road-Safety is a crucial requirement in all Autonomous and Advanced Driver Assistance systems. The smart
+The major challenge and crucial challenge in the complete autonomy of the cars is road-safety. Though there are pedestrian and cyclist detection methods available in every
+Autonomous and Advanced Driver Assistance systems[ADAS], they still produce high rate of errors in real world scenes. The smart
 cars are facing many challenges in Vulnerable road users recognition [ VRUs]. The objects in front of the car in traffic scene must be
-detected with high accuracy to achieve fully autonomous cars. The detection of object of interest is hard in urban areas,
-because of the wide variety of object appearances and occlusions caused by other objects. The similarities of object of interest with other or to the background and physical effects like cast shadows or reflections can make the distinction difficult. \cite{janai_computer_2017}. We have seen examples of Computer Vision failing to recognize cyclists, and failure in recognizing pedestrians in dim light.  Though most
-autonomous cars are able to classify pedestrians, it would largely help us deal with the cyclists differently.
+detected with high accuracy to achieve fully autonomous cars. We have seen examples of Computer Vision failing to recognize cyclists, and failure in recognizing pedestrians in dim light. On KITTI dataset challenge leaderboard, we can see networks performing highly efficiently in detecting Cars and Pedestrians but giving very poor results in case of Cyclist detection and recognition.
+
+Though most
+autonomous cars are able to classify pedestrians, it would largely help us deal with the cyclists who are approaching the car in different directions differently. Identifying and classifying cyclists into different views will give the ADAS more information on how to deal with the issue next.
 Vulnerable road users can be detected using 2 methods.\\
 (1) Sensor based approach\\
-(2)Vision based approach
+(2)Vision based approach\\
 
 \subsection{Vision based approach:}
 
-  In vision based approach only data from the cameras are used to distinguish between objects.
-Computer vision means the machine is able to get some meaningful information from an image or video. Human vision is highly
-developed with the ability to understand and classify the whole scene at once, However, it was a difficult problem to gain decent 
-vision results with computers up until recently, as the computers did not have the processing abilities. Though, the concept of computer vision has
-been around since the 1950's, only recently we have been able to practically implement these theories. Thanks to huge volumes of 
-images and videos available online. The advance in hardware with high processing power GPUs is another reason for the recent success 
-which is a contribution from the gaming industry.
+  In vision based approach only data from the visual sensors (cameras) are used to classify and localize objects.
+Computer vision techniques continually strive to get some meaningful information from an image or video. Human vision is highly developed with the ability to understand and classify the any object or even the entire surrounding scene at once. However, it is a difficult problem to gain decent 
+vision results with computers up until recently. Though, the concept of computer vision has
+been around since the 1950's, only recently we have been able to practically implement these theories. The major challenges in the field of computer vision were there was not enough data available to train the models. The Computers did not have the computing ability to execute the theoretical solutions. 
+Thanks to huge volumes of 
+images and videos available on the internet and advance in hardware with Graphical Processing Units is another reason for the recent success which is a contribution from the gaming industry. Computer vision has become a major contributor to all the cutting edge applications including Autonomous vehicles.
 
-The object detection task can be addressed with a variety of different of sensors. Cameras are the cheapest and most commonly used type of sensors for the detection of objects. The visible spectrum (VS) is typically used for detection during daytime whereas the infrared spectrum can be used for night-time detection. Thermal infrared (TIR) cameras capture relative temperature which allows to distinguish warm objects like pedestrians from cold objects like vegetation or the road.\cite{janai_computer_2017}
+Today, there are still many issues with Computer-Vision based algorithms. The detection of object of interest is a difficult problem in urban areas,
+because of the wide variety of object appearances and occlusions caused by other objects. The similarities of cyclists with other or to the background and physical effects like shadows, illumination and reflections can make the distinction difficult. \cite{janai_computer_2017}. The wide range of bikes of different styles and pedestrians, change in color, size of the object poses an added difficulty.  
+
+ Cameras are the cheapest and most commonly used type of sensors for the detection of objects. The visible spectrum (VS) is typically used for detection during daytime whereas the infrared spectrum can be used for night-time detection. Thermal infrared (TIR) cameras capture relative temperature which allows to distinguish warm objects like pedestrians from cold objects like vegetation or the road.\cite{janai_computer_2017}
 
 
 \subsection{Sensor based approach:}
 
-  In sensor based approach, the autonomous vehicles are mounted with sensors such as LiDAR systems.
+  In sensor based approach, the autonomous vehicles are mounted with stereo cameras, LiDAR systems and  millimeter-wave radar.
+  The object detection task can be addressed with a variety of different of sensors.
 The depth information of the sensor based systems result in higher accuracy in detecting an object and localizing it. These are considered superior and known to have high accuracy in today’s research field.Depending on the weather conditions or material properties it can be problematic
 to rely on a single type of sensor alone. Visible spectrum cameras and laser scanners are affected by reflective or transparent surfaces while
 hot objects (like engines) or warm temperatures can influence
-Thermal infrared cameras. \cite{janai_computer_2017}. It is better to use a combination of sensors to generate high accuracy results\cite{enzweiler_multilevel_2011}. A multilevel mixture-of-experts framework for pedestrian classification. IEEE Trans. on Image Processing\cite{chen_3d_2016}
-object proposals using stereo imagery for accurate object class detection.
-[González, A., Vázquez, D., Lóopez, A. M., \& Amores, J. (2016). On-board object detection: Multicue, multimodal, and multiview random forest of local
-experts. IEEE Trans. on Cybernetics].  These papers allow mention in depth about robust methods for sensor fusion. Sensors are also expensive and some car manufacturers are reluctant to compromise the look of the car for smart features.
+Thermal infrared cameras. \cite{janai_computer_2017}. It is better to use a combination of sensors to generate high accuracy results\cite{enzweiler_multilevel_2011}. Sensors are also expensive and some car manufacturers are reluctant to compromise the look of the car for smart features.
 In this paper, we will discuss and try to identify cyclists as accurately and quickly as possible using
 vision based approach. Accuracy and Speed are both very important aspects that could highly influence the
 outcome in road-safety systems. In this papers, we will compare the performance of different Convolutional neural network architectures, their performance on the vision-based networks. We can compare the performance of one model over the other. Improving accuracy of object detection with each new network tried is
 the goal.
+\clearpage
 
 \section{Literature Review}
+\subsection{Related Work:}
 
-Brief history of Computer vision in Autonomous cars:\\
-Around the time of 1992 - 2000 statistical machine learning models such as Support Vector Machine, Boosting started to gain popularity. The VJ detector by Viola-Jones \cite{viola_detecting_2003} with it's detection technology was the first ground-breaking object detection algorithm, which was able to detected faces with limited amount of computational power available at the time. SIFT model by David Lowe, 1999 feature based object detection. The idea is to match the features of 2 images that are constant or invariant. Based on these features the objects were classified into that particular class. This is a more efficient method than pattern matching the whole image. Another method, Spatial Pyramid matchingis based on finding certain patterns in the image, that will hint us about what the image could be about. A variation of this model is Histogram of Gradients[HoG], \cite{dalalHistogramsOrientedGradients} and Deformable part Model \cite{felzenszwalbObjectDetectionDiscriminatively2010}  performed well on Human detection.  In 2012, Convolutional neural networks\cite{krizhevskyImageNetClassificationDeep2012} out-performed all the other models significantly in the annual Image-net object recognition challenge, which is the bench-mark dataset for object recognition. Convolutional neural networks are performing well in classification, detection and segmentation.As we are following a vision based object detection approach using using 2-D images, Convolutional neural networks are the obvious solution. They have outperformed all the previous detection methods by significant margins. There are various variations of convolutional neural networks to choose from based on the problem at hand. We will try to work with few variations of CNNs.
+\subsubsection{Object Detection:}
+Around the time of 1992 - 2000 statistical machine learning models such as Support Vector Machine, Boosting started to gain popularity. The VJ detector by Viola-Jones \cite{viola_detecting_2003} with it's detection technology was the first ground-breaking object detection algorithm, which was able to detected faces with limited amount of computational power available at the time. SIFT model by David Lowe, 1999 feature based object detection. The idea is to match the features of 2 images that are constant or invariant. Based on these features the objects were classified into that particular class. This is a more efficient method than pattern matching the whole image. Another method, Spatial Pyramid matching is based on finding certain patterns in the image, that will hint us about what the image could be about. A variation of this model is Histogram of Gradients[HoG], \cite{dalal_histograms_2005} and Deformable part Model \cite{felzenszwalb_object_2010}  performed well on Human detection. There are certain problems where the traditional approaches such as this are still continually outperforming all the other methods.
 
-Not many research papers have focused on the problem of cyclist detection. In 2016, Xiaofei Liand team presented a paper 
-\subsection{Detection}
+\subsubsection{Computer Vision with Deep Learning}
 
-The common methods followed during any traffic scene detections are,
-\begin{enumerate}
-  \item Preprocessing the images
-  \item Extracting region of interest
-  \item Object classification
-  \item Verification
-\end{enumerate}
-
-
-\subsubsection{1.Preprocessing of images}
-sdfjksdf
-
-\subsubsection{2.Extracting region of interest}
-sdjdklsfm
-
-\subsubsection{3.Object classification}
-sdksdflkdsf
-
-\subsubsection{4.Verification}
-dsfkdslf;.
-
-
-
-
-\section{State of Art}
-sdsdf
-
-\subsection{Convolutional neural networks}
-dfdgd
 
 \subsubsection{Convolutional neural layer} are different from fully connected layers in the sense that they preserve the spatial structure of the image. Then we convolve the image with a filter, by sliding the filter over the image spatially and compute dot products. Filters have smaller spatial area compared to the original image, but they always have the same depth as the image. Depending on the size of the filter and the image, the size of the output always changes. 
 
@@ -165,7 +139,7 @@ ever since then they have bet all the previous methods in terms of object detect
 
 \textit{Filter:} Each filter looks for a specific feature in the image. So, when we are trying to detect a certain object in the image, we use multiple filters. Each filter after convolved with the image generates an activation map. So, the number of activation maps is equal to the number of filters used. The filter size is usually in powers of 2
 
-\textit{Stride:} It gives the effect affect of downsampling the image at each layer. It also results in smaller activation maps after each layer. This would also result in smaller number of parameters to deal with.\\
+\textit{Stride:} It gives the effect affect of down sampling the image at each layer. It also results in smaller activation maps after each layer. This would also result in smaller number of parameters to deal with.\\
 Output size = (N -F)/ stride + 1
 
 where, N = Image size,\\
@@ -224,7 +198,7 @@ This is usually used at the end of convolutional neural networks. All the neuron
 \textit{Normalization layer:}
 
 ** Copied**
-The normalization layers are introduced between convolutional layers and pooling layers to normalize the irregularities and speed up network training and reduce the sensitivity to network initialization. The layer first normalizes the activations of each channel by subtracting the mini-batch mean and dividing by the mini-batch standard deviation. Then, the layer shifts the input by an offset β and scales it by a scale factor γ. β and γ are themselves learnable parameters that are updated during network training. Create a batch normalization layer using batch Normalization Layer.
+The normalization layers are introduced between convolutional layers and pooling layers to normalize the irregularities and speed up network training and reduce the sensitivity to network initialization. The layer first normalizes the activation of each channel by subtracting the mini-batch mean and dividing by the mini-batch standard deviation. Then, the layer shifts the input by an offset β and scales it by a scale factor γ. β and γ are themselves learnable parameters that are updated during network training. Create a batch normalization layer using batch Normalization Layer.
 
 \textit{Dropout Layer:}
 
@@ -276,7 +250,7 @@ From the above graph, you can see that Faster R-CNN is much faster than it’s p
 arly to zero. Because of this phenomenon, L2 regularization is also commonly referred to as weight decay.
 
 \subsection{Hard negative mining}
-n order to train a detector with TFODAPI you don’t need to provide negative examples: the trainer can use your labeled images as well for this purpose. The procedure is called online hard-negative mining and that is why: for each “negative” generated box (that is: such box that its overlap with any of the ground truth boxes is less than specified threshold) on feature map the classification loss is calculated (it has to be high as far as it is not labeled as any object instance), then these negative boxes are sorted by their respective loss in descending order and top-k of them are used for backpropagation. Three questions arise here.
+n order to train a detector with TFODAPI you don’t need to provide negative examples: the trainer can use your labeled images as well for this purpose. The procedure is called online hard-negative mining and that is why: for each “negative” generated box (that is: such box that its overlap with any of the ground truth boxes is less than specified threshold) on feature map the classification loss is calculated (it has to be high as far as it is not labeled as any object instance), then these negative boxes are sorted by their respective loss in descending order and top-k of them are used for back propagation. Three questions arise here.
 
 Well, in case of object detection, you most probably have not-so-many objects on training images (usually less than a dozen), so the largest area on the image is a background (otherwise it wouldn’t be called background, right?). So taking all of the negatives leads to a great imbalance of the dataset towards negative examples, and that is of no good for a good training. In order to keep your dataset balanced you can fix the number of negative examples per single positive one — in this case your dataset will always have a fixed ratio of class representatives (for example, 3/1).
 
@@ -288,6 +262,108 @@ Imagine that you take random negatives. Random here means that we don’t take i
 RFCN pretrained on Coco image dataset is used. This is a much bigger imageset with 1.5 million images. Using this model
 the training period reduced drastically.
 This network is used with blah blah
+
+In 2012, Convolutional neural networks\cite{krizhevsky_imagenet_2012} out-performed all the other models significantly in the annual Image-net object recognition challenge. Image-Net is one of the bench-mark dataset for object recognition.Image-Net competition is where all the algorithms developed in that field are tested against the same data set and their error-rate is compared. Convolutional neural networks are performing well in classification, detection and segmentation. As we are following a vision based object detection approach using using 2-D images, Convolutional neural networks are the obvious solution. They have outperformed all the previous detection methods by significant margins. There are various variations of Convolutional Neural Networks to choose from based on the problem at hand. We will try to work with few variations of CNNs.
+
+
+
+\subsubsection{Cyclist Detection:}
+There are very few papers that have focused on the problem of cyclist detection. The most recent ones, also the only papers to have used Deep learning techniques to solve the cyclist detection papers are discussed below. In 2016, Xiaofei Li[cite:] and team presented a paper that was entirely dedicated to solving the Cyclist detection problem. Till then, most of the traffic scene detection datasets and Pedestrian detection datasets completely left out cyclists or had very few instances of Cyclists. This paper introduced a benchmark dataset for Cyclist detection, which is collected by driving around in the Beijing city, China. The dataset represents has close-to real world scenes, with highly occluded Cyclists, cyclists that are similar to other riders, cyclists that are similar to backgrounds.
+
+The cyclists are divided into 3 different views based on the aspect ratio of bikes to deal with the variation of view in cyclists. The paper majorly focuses on detecting and identifying a object as cyclist. The information about the orientation of cyclist with respect to the car is not the output. The paper takes 3 different approaches to detect cyclists on the dataset they have created. Two traditional approaches such as Aggregated Channel Features[cite:], Deformable Part Model[cite:] and Region Based convolutional neural networks. Since, in this paper we are interested in detecting the cyclists with Convolutional neural network approach, check more details about how this model was built. Region based convolutional neural networks[RCNNs] are driving the success in the field of object detection. These are explained in detail below. This paper introduced a special architecture of their own called Stereo-Proposal based Fast R-CNN, which derives it's Region proposal methods from Stixel world\cite{enzweiler_efficient_2012}. Every object detector uses a region proposal method, to identify potential regions. The images are first converted to Stixels and the region is proposed from this new picture. The proposed region is observed on the original image to classification and localization part of the network, where bounding box regressors generate a bounding box for the object and classifies it into a specific class. The stixel generation is done based on the paper,  \cite{enzweiler_efficient_2012}. The open source of ZF-nets and VGG-nets are employed in this work of Fast-RCNN architecture. The image side was restricted to 650 pixels and 1300 pixels, due to limited Graphics memory. In this experiment they found that Convolutional neural networks have not performed as good as the other traditional counterparts. Though, the much Faster counterpart of Faster-RCNN was available during this period, the team has used Fast- RCNN framework. This is probably due to the fact that they wanted to implement external Region Proposal Network and not the automatic Region proposal network, that is inbuilt in Faster RCNN.
+
+In 2017, Khaled Shah \cite{saleh_cyclist_2017} and team proposed a paper dedicated to Cyclist detection using Faster-RCNN and KITTI\cite{geiger_vision_2013} dataset using LiDar data. In this method, the authors have used depth data of the cyclist to propose regions that potentially contain a cyclist. They synthetically generated 10K annotated depth image of cyclists. The paper has then compared 3 different networks Faster RCNN with changing the shared ConvNet between different networks. The network with Faster RCNN and VGGNet16 has given the best result. With the depth image, they were able to get good results with accuracy at rate 89\%, whereas the Deep learning method mentioned above \cite{xiaofei_li_new_2016} achieved only 75\% accuracy. The training data used here was generated synthetically, but it was able to generalize well on LiDar test data. Expect for minimizing the loss function using mini-Stochastic Gradient Descent no other fine tuning was applied to the original faster RCNN network. Unlike, the Vision based approach, in this paper with Depth information the Convolutional Neural Networks have outperformed the traditional approaches.
+
+\section{Dataset}
+
+Since pre-trained models are easier to train and converge faster than training models from scratch, I have considered models that were  pretrained on KITTI\cite{geigerAreWeReady2012} and Coco dataset. The dataset that was used for training was Tsinghua-Daimler benchmark dataset introduced by Xiaofei Li \cite{xiaofei_li_new_2016}.
+
+\subsection{KITTI Dataset}
+There is plenty of data available for pedestrian detection like CALTECH benchmark dataset. KITTI \cite{geigerAreWeReady2012} dataset is the benchmark traffic scene recognition. It has about 2000 cyclists. But, the ratio of number of cyclists available is less compared to the number of cars or pedestrians. Most the algorithms competing in KITTI \cite{geigerAreWeReady2012} object recognition challenge in the KITTI\cite{geigerAreWeReady2012} leader board perform very well with Car and Pedestrians but perform poorly on Cyclists. Maybe due to the lack of number of cyclists used during training. The KITTI\cite{geigerAreWeReady2012} dataset has recorded the traffic scene by driving the car around in a small city, rural areas and highways. This is possibly the most challenging and close to real world traffic scene detection dataset. Since, the data I will be using for training is also collected by driving the car around the city, the view of the images would be similar. Hence, I chose the model pre-trained on KITTI dataset.
+
+\subsection{COCO Dataset}
+The COCO dataset with 2.5 million labeled instances in 328k images is a benchmark dataset in the field of object detection. The networks pretrained on COCO dataset are said to perform fairly well on generic object detection problems. The dataset has 91 different classes including significant number of cyclists, cycles, motorcyclists and pedestrians. I have also used a model that is pre-trained on Coco Dataset. But, soon I found that the model pre-trained on KITTI dataset converges faster than Coco Dataset and hence, continued with fine-tuning the model that was pre-trained on KITTI dataset.
+
+\subsection{Tsinghua-Daimler Cyclist Benchmark Dataset}
+
+Till 2016, there was no large-scale dataset containing large variation of cyclists and that could attribute to the large variety of variations in the cyclist dataset. In 2016, Xiaofei Li and team created the dataset for cyclist detection alone. The dataset contains annotated cyclists, pedestrians, motorcyclists and other riders. The training dataset contains only annotated cyclists. The validation and test dataset contains other Vulnerable Road users [VRUs], to make sure there are no false positives. The dataset also has information about occlusions, which can be used during evaluation to see how the model performs on different levels of difficult images. 
+
+The dataset has is available publicly. This dataset is already divided into 3 parts. Train, Valid and Test. Also, there are 1000 non-VRUs available. These images do not have any objects of interest and can be used for hard negative mining.\\
+Train: \\
+Only cyclists which are fully visible (occlusion<10\%) and higher than 60 pixels have been labeled here.\\
+Valid: \\
+1019 images to be used for validation of hyper parameters. Annotations for ("pedestrian", "cyclist", "motorcyclist", "tricyclist", "wheelchairuser", "mopedrider"). Only objects higher than 20 pixels have been labeled here.\\
+Test: \\
+2914 images normally used for testing with annotations for ("pedestrian", "cyclist", "motorcyclist", "tricyclist", "wheelchairuser", "mopedrider"). Only objects higher than 20 pixels have been labeled here.
+
+87.91\% of the cyclists are fully visible, 9.21\% of the cyclists are partially occluded and 2.88\% of the cyclists are heavily occluded. Only 1.23\% of the cyclists are partly truncated by the image borders.
+
+** Ask Neeru or Anjali **
+
+Table explaining the dataset.
+
+\subsection{Pre-processing the dataset:}
+
+Since, there was no data available to determine the orientation of the cyclist with respect to car, I divided the dataset into 3 separate views based on the aspect ratio of the bounding box of the cyclists. \\
+1. Wide \\
+2. Intermediate \\
+3. Narrow \\
+
+\[Aspect ratio =  height/width\]
+
+If ratio < 1.1: 'wide'\\
+If ratio 1.1 <= ratio < 2.1:  'intermediate'\\
+If ratio 2.1 <= ratio: 'narrow'\\
+
+After separating the instances into 3 separate classes, I had 
+
+Narrow cyclists ~ 17000\\
+Wide cyclists ~ 800\\
+Intermediate ~ 1200\\
+
+Ignore some of the data from Narrow class.
+Take screen shot of wide and intermediate classes and feed them to the network.
+Random horizontal flip.
+Random adjusting brightness.
+
+Last accuracy : 48 %
+Initial accuracy:
+3 seperate views:
+Narrow = 30 %
+Intermediate = 10%
+Wide = 8%
+
+
+
+
+
+
+
+
+
+\section{Accuracy}
+
+\begin{center}
+ \begin{tabular}{||c c c c c||} 
+ \hline
+       & Set 1 & Set 2 & Intermediate & Wide\\ [0.5ex] 
+ \hline
+FasterRCNN +Resnet & No finetuning & 53.2 & 22 & 35\\ 
+ \hline
+FasterRCNN +Resnet & Increased region proposals & 55 & 33 & 37\\
+ \hline
+FasterRCNN + Resnet & dropout & 59 & 32 & 39\\
+ \hline
+ R-FCN + Resnet & No finetuning & 50 & 33 & 23\\
+ \hline
+
+ \hline
+\end{tabular}
+\end{center}
+
+\subsection{Detection}
+
+
 \section{Accuracy}
 
 \begin{center}
@@ -309,11 +385,42 @@ FasterRCNN + Resnet & dropout & 59 & 32 & 39\\
 \end{center}
 
 
+\section{Experiment}
+\subsection{Machine Specification:}
+The common methods followed during any traffic scene detections are,
+\begin{enumerate}
+  \item Preprocessing the images
+  \item Extracting region of interest
+  \item Object classification
+  \item Verification
+\end{enumerate}
+
+
+\subsubsection{1.Preprocessing of images}
+sdfjksdf
+
+\subsubsection{2.Extracting region of interest}
+sdjdklsfm
+
+\subsubsection{3.Object classification}
+sdksdflkdsf
+
+\subsubsection{4.Verification}
+dsfkdslf;.
+
+\subsection{}
+
+
+\section{Conclusion}
+Faster R-CNN are the mostly in fame for high accuracy. However, in case of cyclist detection a custom Region proposal system seems necessary and hence using a Fast-RCNN model with external region proposal network would be satisfactory.
+
+
 
 
 \section{Future work:}
 
 We could calculate the distance between car and cyclists to determine if any action must be taken. We could also conduct the same experiments mentioned above in dim light and night time environments to understand how well the models would perform under challenging circumstances.
+\clearpage
 
 \printbibliography
 
